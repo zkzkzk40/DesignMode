@@ -23,7 +23,7 @@ public class Application {
         String newPath=path.substring(0,path.lastIndexOf(".")+1)+"zk";
         myFile.setFilePath(path);
         FileOperation.writeObject(newPath,myFile);
-//        FileOperation.deleteFile(path);
+        FileOperation.deleteFile(path);
         return newPath;
     }
     /**
@@ -57,10 +57,11 @@ public class Application {
      * @author zk
      * @date 2022/3/24 20:53
      * @param path 需要解密的文件,后缀需为.zk
+     * @return 新文件路径
      */
     public static String decryptedFileWrite(String path){
         MyFile myFile =decryptFile(path);
-        FileOperation.writeBytes(new EncodingContext().decryptTxt(myFile),path);
+        FileOperation.writeBytes(new EncodingContext().decryptTxt(myFile),myFile.getFilePath());
         return myFile.getFilePath();
     }
     public static void main(String[] args) {

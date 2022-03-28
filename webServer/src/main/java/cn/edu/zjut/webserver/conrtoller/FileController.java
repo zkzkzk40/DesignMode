@@ -45,23 +45,21 @@ public class FileController {
             log.error("文件上传失败!");
             return "uploading failure";
         }
-        log.info("文件上传成功!");
-
         String path=filepath+file.getOriginalFilename();
+        log.info("文件上传成功!,暂存在:{}",path);
+
         String newFilePath;
         //2. 解密文件
         if(file.getOriginalFilename().endsWith(".zk")){
             log.info("开始解密文件:{},加密模式为:{}",file.getOriginalFilename(),encryptMode);
             newFilePath=decryptedFileWrite(path);
-            log.info(newFilePath);
         }
         //3. 加密文件
         else{
             log.info("开始加密文件:{},加密模式为:{}",file.getOriginalFilename(),encryptMode);
             newFilePath=readAndSave(path,encryptMode);
-            log.info(newFilePath);
         }
-        log.info("开始向客户端传输文件");
+        log.info("开始向客户端传输文件:{}",newFilePath);
         //4.向客户端传输文件
         File newfile = new File(newFilePath);
         if(newfile.exists()){

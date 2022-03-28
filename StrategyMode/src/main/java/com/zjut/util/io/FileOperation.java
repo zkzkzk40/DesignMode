@@ -27,8 +27,7 @@ public class FileOperation {
 
         File file=new File(path);
         if (file.exists()){
-            System.out.println("deleteFile="+Paths.get(path));
-            System.out.println(file.delete());
+            file.delete();
         }
     }
     /**
