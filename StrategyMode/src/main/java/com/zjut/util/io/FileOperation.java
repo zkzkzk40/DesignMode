@@ -127,7 +127,7 @@ public class FileOperation {
         return result;
     }
     /**
-     * 读取文件
+     * 从文件路径中读取文件
      * @author zk
      * @date 2022/3/24 17:45
      * @param path
@@ -138,6 +138,30 @@ public class FileOperation {
         byte[] byt = null;
         try {
             File file = new File(path);
+            input = new FileInputStream(file);
+            byt = new byte[input.available()];
+            input.read(byt);
+            input.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+        return byt;
+    }
+    /**
+     * 从文件中读取文件
+     * @author zk
+     * @date 2022/3/24 17:45
+     * @param file
+     * @return byte[]
+     */
+    public static byte[] readFile(File file){
+        InputStream input = null;
+        byte[] byt = null;
+        try {
             input = new FileInputStream(file);
             byt = new byte[input.available()];
             input.read(byt);

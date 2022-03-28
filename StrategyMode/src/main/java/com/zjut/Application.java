@@ -47,9 +47,10 @@ public class Application {
  	 * @param path 需要解密的文件,后缀需为.zk
      * @param newPath 被加密文件解密后存放路径
      */
-    public static void decryptedFileWrite(String path,String newPath){
+    public static String decryptedFileWrite(String path,String newPath){
         MyFile myFile =decryptFile(path);
         FileOperation.writeBytes(new EncodingContext().decryptTxt(myFile),newPath);
+        return myFile.getFilePath();
     }
     /**
      * 重载 解密后写入到文件
@@ -57,9 +58,10 @@ public class Application {
      * @date 2022/3/24 20:53
      * @param path 需要解密的文件,后缀需为.zk
      */
-    public static void decryptedFileWrite(String path){
+    public static String decryptedFileWrite(String path){
         MyFile myFile =decryptFile(path);
         FileOperation.writeBytes(new EncodingContext().decryptTxt(myFile),path);
+        return myFile.getFilePath();
     }
     public static void main(String[] args) {
         //1. 获取文件内容
