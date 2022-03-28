@@ -17,9 +17,9 @@ public class Application {
      * @date 2022/3/24 16:16
  	 * @param path 文件路径
      */
-    public static String readAndSave(String path){
+    public static String readAndSave(String path,EncryptTypeEnum encryptTypeEnum){
         byte[] fileTXT= FileOperation.readFile2(path);
-        MyFile myFile= new EncodingContext().encryptTxt(fileTXT, EncryptTypeEnum.AESEncrypt);
+        MyFile myFile= new EncodingContext().encryptTxt(fileTXT, encryptTypeEnum);
         String newPath=path.substring(0,path.lastIndexOf(".")+1)+"zk";
         myFile.setFilePath(path);
         FileOperation.writeObject(newPath,myFile);
@@ -63,11 +63,11 @@ public class Application {
     }
     public static void main(String[] args) {
         //1. 获取文件内容
-        String path="D:\\desktop\\设计模式.pdf";
+        String path="D:\\desktop\\设计模式实验一 201906061726 张坤.docx";
         //2. 加密文件内容
         //3. 序列化保存文件
-        String encryptedFilePath=readAndSave(path);
-        String newPath="D:\\desktop\\设计模式222.pdf";
+        String encryptedFilePath=readAndSave(path,EncryptTypeEnum.RSAEncrypt);
+        String newPath="D:\\desktop\\2.docx";
         decryptedFileWrite(encryptedFilePath,newPath);
     }
 }
