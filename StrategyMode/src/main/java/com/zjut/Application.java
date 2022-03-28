@@ -23,7 +23,7 @@ public class Application {
         String newPath=path.substring(0,path.lastIndexOf(".")+1)+"zk";
         myFile.setFilePath(path);
         FileOperation.writeObject(newPath,myFile);
-        FileOperation.deleteFile(path);
+//        FileOperation.deleteFile(path);
         return newPath;
     }
     /**
@@ -44,19 +44,30 @@ public class Application {
      * 解密后写入到文件
      * @author zk
      * @date 2022/3/24 20:53
- 	 * @param path
+ 	 * @param path 需要解密的文件,后缀需为.zk
+     * @param newPath 被加密文件解密后存放路径
+     */
+    public static void decryptedFileWrite(String path,String newPath){
+        MyFile myFile =decryptFile(path);
+        FileOperation.writeBytes(new EncodingContext().decryptTxt(myFile),newPath);
+    }
+    /**
+     * 重载 解密后写入到文件
+     * @author zk
+     * @date 2022/3/24 20:53
+     * @param path 需要解密的文件,后缀需为.zk
      */
     public static void decryptedFileWrite(String path){
         MyFile myFile =decryptFile(path);
-        FileOperation.writeBytes(new EncodingContext().decryptTxt(myFile),myFile.getFilePath());
+        FileOperation.writeBytes(new EncodingContext().decryptTxt(myFile),path);
     }
-
     public static void main(String[] args) {
         //1. 获取文件内容
-        String path="D:\\desktop\\1.docx";
+        String path="D:\\desktop\\设计模式.pdf";
         //2. 加密文件内容
         //3. 序列化保存文件
-        String newPath=readAndSave(path);
-        decryptedFileWrite(newPath);
+        String encryptedFilePath=readAndSave(path);
+        String newPath="D:\\desktop\\设计模式222.pdf";
+        decryptedFileWrite(encryptedFilePath,newPath);
     }
 }
