@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSocket</title>
+  <script src="js/echarts.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<body>
+<div id="main" style="width: 100%;height:700px; position: center"></div>
+<div style="text-align: center;">
+  <button style="position: center" type="button" class="btn btn-success" onclick="openSocket('candlestick')">查看K线图</button>
+  <button style="position: center" type="button" class="btn btn-info" onclick="openSocket('line')">查看折线图</button>
+</div>
+
+<script type="text/javascript">
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('main'));
+  // 指定图表的配置项和数据
+  var option = {
+    xAxis: {
+      type: 'category',
+      data: []
+    },
+    yAxis: {},
+    series: [
+      {
+        type: 'candlestick',
+        data: [
+        ]
+      }
+    ]
+  };
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option);
+  var socket;
+  function openSocket(type) {
+    if(typeof(WebSocket) == "undefined") {
+      console.log("您的浏览器不支持WebSocket");
+    }else{
+      option.series[0].type=type
+      console.log(option.series.type)
+      console.log("您的浏览器支持WebSocket");
+      //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+      var socketUrl=`ws://localhost:8000/webSocket/${Math.random()*10000}/${type}`;
+      console.log(socketUrl);
+      if(socket!=null){
+        socket.close();
+        socket=null;
+      }
+      socket = new WebSocket(socketUrl);
+      //打开事件
+      socket.onopen = function() {
+        console.log("websocket已打开");
+      };
+      //获得消息事件
+      socket.onmessage = function(msg) {
+        var dd=JSON.parse(msg.data)
+        //发现消息进入    开始处理前端触发逻辑
+        option.xAxis.data=dd.xAxis
+        option.series[0].data=dd.data
+        myChart.setOption(option);
+      };
+      //关闭事件
+      socket.onclose = function() {
+        console.log("websocket已关闭");
+      };
+      //发生了错误事件
+      socket.onerror = function() {
+        console.log("websocket发生了错误");
+      }
+    }
+  }
+</script>
+</body>
+<script>
+
+
+</script>
+<style type="text/css">
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  html, body{
+    height: 100%;
+  }
+</style>
+</html>
