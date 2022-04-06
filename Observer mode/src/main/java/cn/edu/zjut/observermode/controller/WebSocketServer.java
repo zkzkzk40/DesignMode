@@ -33,7 +33,13 @@ public class WebSocketServer {
     private static ConcurrentHashMap<String, Session> KLineSessionPools = new ConcurrentHashMap<>();
     private static ConcurrentHashMap<String, Session> SimpleLineSessionPools = new ConcurrentHashMap<>();
 
-
+    /**
+     * 向对应客户端发送信息
+     * @author zk
+     * @date 2022/4/6 19:29
+ 	 * @param session
+ 	 * @param message
+     */
     public static void sendMessage(Session session, String message) throws IOException {
         if(session != null){
             synchronized (session) {
@@ -41,6 +47,12 @@ public class WebSocketServer {
             }
         }
     }
+    /**
+     * 发送K线图信息
+     * @author zk
+     * @date 2022/4/6 19:30
+ 	 * @param kStockAllData
+     */
     public static void sendKlineInfo(KStockAllData kStockAllData){
         if(KLineSessionPools.size()==0){
             return;
@@ -60,6 +72,13 @@ public class WebSocketServer {
             }
         }
     }
+    /**
+     * 发送折线图信息
+     * @author zk
+     * @date 2022/4/6 19:30
+ 	 * @param time
+ 	 * @param price
+     */
     public static void sendSimplelineInfo(List<String> time,List<Double> price){
         if(SimpleLineSessionPools.size()==0){
             return;
@@ -76,7 +95,14 @@ public class WebSocketServer {
             }
         }
     }
-    //建立连接成功调用
+    /**
+     * 建立连接成功调用
+     * @author zk
+     * @date 2022/4/6 19:30
+ 	 * @param session
+ 	 * @param userName 用户名称,用于记录和删除session
+ 	 * @param type 需求类型
+     */
     @OnOpen
     public void onOpen(Session session, @PathParam(value = "sid") String userName, @PathParam(value = "type") String type){
         if("candlestick".equals(type)){
@@ -108,14 +134,12 @@ public class WebSocketServer {
             SimpleLineSessionPools.remove(userName);
         }
         subOnlineCount();
-        System.out.println(userName + "断开webSocket连接！当前人数为" + onlineNum);
     }
 
     //收到客户端信息
     @OnMessage
     public void onMessage(String message) throws IOException{
         message = "客户端：" + message + ",已收到";
-        System.out.println(message);
         for (Session session: KLineSessionPools.values()) {
             try {
                 sendMessage(session, message);

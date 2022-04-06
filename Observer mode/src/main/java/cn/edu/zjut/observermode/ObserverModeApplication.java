@@ -20,17 +20,6 @@ import static java.lang.Thread.sleep;
 @SpringBootApplication
 public class ObserverModeApplication {
 
-    @Test
-    public void test(){
-        double price=1000.0;
-        Random random=new Random();
-        int T=100;
-        while((T--)>0){
-            price=price*(random.nextInt(20)+90)/100;
-            System.out.println(price);
-        }
-
-    }
     public ObserverModeApplication() {
         System.out.println("ObserverModeApplication构造函数");
         Thread thread=new Thread(new Runnable() {
@@ -41,7 +30,6 @@ public class ObserverModeApplication {
                 double price=random.nextDouble()*100+100;
                 StockExchangeCenter stockExchangeCenter=new StockExchangeCenter();
                 KlineDiagramObserver klineDiagramObserver=new KlineDiagramObserver(stockExchangeCenter);
-                SimpleDateFormat simpleLineDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 LineChartObserver lineChartObserver=new LineChartObserver(stockExchangeCenter);
                 Calendar calendar=Calendar.getInstance();
                 while(true){
@@ -60,10 +48,7 @@ public class ObserverModeApplication {
         });
         thread.start();
     }
-
     public static void main(String[] args) {
         SpringApplication.run(ObserverModeApplication.class, args);
     }
-
-
 }

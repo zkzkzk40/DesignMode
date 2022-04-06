@@ -12,8 +12,17 @@ import java.util.*;
  */
 @Data
 public class KStockAllData {
+    /**
+     * 时间格式化
+     */
     static SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+    /**
+     * K线图原子数据
+     */
     Vector<KStockAtomicData> kStockAtomicDataVector;
+    /**
+     * 时间类存储
+     */
     Vector<Date> dateVector ;
     public void addNewStock(Stock stock){
         if(!dateVector.isEmpty()&&isTheSameDay(stock.getDate(),dateVector.get(dateVector.size()-1))){
@@ -26,7 +35,12 @@ public class KStockAllData {
             dateVector.add(stock.getDate());
         }
     }
-
+    /**
+     * 获取时间集合的函数
+     * @author zk
+     * @date 2022/4/6 19:23
+	 * @return java.util.List<java.lang.String> 存储时间的List集合,需要转换
+     */
     public List<String> getTime(){
         List<String> result=new ArrayList<>();
         dateVector.forEach(item->{
@@ -39,7 +53,14 @@ public class KStockAllData {
         kStockAtomicDataVector =new Vector<>();
         dateVector=new Vector<>();
     }
-
+    /**
+     * 判断是否同一天
+     * @author zk
+     * @date 2022/4/6 19:23
+ 	 * @param d1
+ 	 * @param d2
+	 * @return boolean
+     */
     private static boolean isTheSameDay(Date d1, Date d2) {
         Calendar c1 = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();

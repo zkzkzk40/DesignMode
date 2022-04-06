@@ -1,0 +1,31 @@
+@startuml
+class LineChartObserver {
+~ Subject subject
++ void getChangeInfo(Stock)
+}
+class KlineDiagramObserver {
+~ Subject subject
++ void getChangeInfo(Stock)
+}
+class StockExchangeCenter {
++ void addObserver(Observer)
++ void notifyObservers()
++ void giveNewStock(Stock)
+}
+interface Observer {
++ void getChangeInfo(Stock)
+}
+interface Subject {
++ void addObserver(Observer)
++ void notifyObservers()
++ void giveNewStock(Stock)
+}
+
+
+Observer <|.. LineChartObserver
+Observer <|.. KlineDiagramObserver
+Subject <|.. StockExchangeCenter
+Observer <.. Subject
+Subject <-- KlineDiagramObserver
+Subject <-- LineChartObserver
+@enduml

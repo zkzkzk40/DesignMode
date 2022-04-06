@@ -36,13 +36,25 @@ public class KStockAtomicData {
         maxPrice=stock.getPrice();
         minPrice=stock.getPrice();
     }
+    /**
+     * 更新当天的Stock数据
+     * @author zk
+     * @date 2022/4/6 19:27
+ 	 * @param stock
+     */
     public void updateStock(Stock stock){
         endPrice=stock.getPrice();
         maxPrice=max(maxPrice,stock.getPrice());
         minPrice=min(minPrice,stock.getPrice());
     }
+    /**
+     * 获取数据集合
+     * @author zk
+     * @date 2022/4/6 19:27
+	 * @return java.util.List<java.lang.Double> List集合
+     */
     public List<Double> getAtomicData(){
-        List<Double> result = new ArrayList<Double>();
+        List<Double> result = new ArrayList<>();
         result.add(beginPrice);
         result.add(endPrice);
         result.add(maxPrice);
