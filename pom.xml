@@ -10,6 +10,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>StrategyMode</module>
+        <module>Observer mode</module>
+        <module>SingletonMode</module>
     </modules>
     <dependencies>
         <dependency>
