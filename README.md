@@ -6,7 +6,7 @@
 
 ## 观察者模式
 
-[股票的价格](./Observer mode/README.md)
+[股票的价格](./ObserverMode/README.md)
 
 ## 单例模式
 
