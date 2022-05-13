@@ -1,3 +1,6 @@
 .idea
 mvnw
 mvnw.cmd
+target
+.puml
+.mvn
