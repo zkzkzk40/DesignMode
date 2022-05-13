@@ -12,6 +12,7 @@
         <module>StrategyMode</module>
         <module>Observer mode</module>
         <module>SingletonMode</module>
+        <module>DecoratorMode</module>
     </modules>
     <dependencies>
         <dependency>
